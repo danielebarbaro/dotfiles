@@ -36,6 +36,9 @@ netbeans
 nbproject
 .idea
 .vscode
+*.sass-cache
+*.diff
+*.err
 
 # OS generated files #
 ######################
@@ -43,6 +46,11 @@ nbproject
 ehthumbs.db
 Icon?
 Thumbs.db
+*.orig
+*.pyc
+*.rej
+*.sw?
+*.vi
 
 # Logs #
 ########
