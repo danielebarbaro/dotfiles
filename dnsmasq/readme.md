@@ -1,4 +1,4 @@
-After `dnsmasq install:
+### After `dnsmasq install:
 
     * `services stop dnsmasq && sudo services stop dnsmasq`
     * `cp dnsmasq.conf /usr/local/etc/dnsmasq.conf`
