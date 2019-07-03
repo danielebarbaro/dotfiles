@@ -1,0 +1,81 @@
+#!/bin/bash
+# Creator: Phil Cook
+# Modified: Andy Miller
+brew_prefix=$(brew --prefix | sed 's#/#\\\/#g')
+
+brew_array=("5.5","5.6","7.0","7.1","7.2", "7.3")
+php_array=("php@5.5" "php@5.6" "php@7.0" "php@7.1" "php@7.2" "php@7.3")
+valet_support_php_version_array=("php@5.5" "php@5.6" "php@7.0" "php@7.1" "php@7.2" "php@7.3")
+php_installed_array=()
+php_version="php@$1"
+php_opt_path="$brew_prefix\/opt\/"
+
+php5_module="php5_module"
+apache_php5_lib_path="\/lib\/httpd\/modules\/libphp5.so"
+php7_module="php7_module"
+apache_php7_lib_path="\/lib\/httpd\/modules\/libphp7.so"
+native_osx_php_apache_module="LoadModule php5_module libexec\/apache2\/libphp5.so"
+
+php_module="$php5_module"
+apache_php_lib_path="$apache_php5_lib_path"
+
+# Has the user submitted a version required
+if [[ -z "$1" ]]
+then
+	echo "usage: sphp version [-s|-s=*] [-c=*]"; echo;
+	echo "    version    one of:" ${brew_array[@]};
+	echo "    -s         skip change of mod_php on apache";
+	echo "    -s=*         skip change of mod_php on apache or valet restart i.e (apache|valet,apache|valet)";
+	echo "    -c=*         switch a specific config (apache|valet,apache|valet"; echo;
+	exit
+fi
+
+if [ $(echo "$php_version" | sed 's/^php@//' | sed 's/\.//') -ge 70 ]; then
+	php_module="$php7_module"
+	apache_php_lib_path="$apache_php7_lib_path"
+fi
+
+POSITIONAL=()
+
+# What versions of php are installed via brew
+for i in ${php_array[*]}
+	do
+		if [[ -n "$(brew ls --versions "$i")" ]]
+		then
+			php_installed_array+=("$i")
+		fi
+done
+
+# Check that the requested version is supported
+if [[ " ${php_array[*]} " == *"$php_version"* ]]
+then
+	# Check that the requested version is installed
+	if [[ " ${php_installed_array[*]} " == *"$php_version"* ]]
+	then
+
+		# Switch Shell
+		echo "Switching to $php_version"
+		echo "Switching your shell"
+		for i in ${php_installed_array[@]}
+		do
+			if [[ -n $(brew ls --versions $i) ]]
+			then
+				brew unlink $i
+				brew services stop $i
+			fi
+		done
+		brew link --force "$php_version"
+		brew services start "$php_version"
+
+        echo ""
+        php -v
+        echo ""
+
+		echo "All done!"
+		brew services list
+	else
+		echo "Sorry, but $php_version is not installed via brew. Install by running: brew install $php_version"
+	fi
+else
+	echo "Unknown version of PHP. PHP Switcher can only handle arguments of:" ${brew_array[@]}
+fi
