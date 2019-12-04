@@ -41,6 +41,10 @@ if type _git &> /dev/null && [ -f /usr/local/etc/bash_completion.d/git-completio
 	complete -o default -o nospace -F _git g;
 fi;
 
+if which ruby >/dev/null && which gem >/dev/null; then
+  PATH="$(ruby -r rubygems -e 'puts Gem.user_dir')/bin:$PATH"
+fi
+
 # Idiot bash alias
 alias gitst="git st"
 alias gits="git st"
@@ -76,3 +80,7 @@ alias flushdns="dscacheutil -flushcache"
 # Empty the Trash on all mounted volumes and the main HDD
 # Also, clear Apple’s System Logs to improve shell startup speed
 alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl"
+
+
+
+alias docker-apocalisse="/Users/daniele/Development/docker-apocalisse.sh"

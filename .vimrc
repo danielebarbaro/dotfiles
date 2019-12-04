@@ -3,10 +3,9 @@ color dracula
 
 set encoding=utf-8 nobomb " Use UTF-8 without BOM
 set cursorline " Highlight current line
-set tabstop=2 " Make tabs as wide as two spaces
 set hlsearch " Highlight searches
 set incsearch " Highlight dynamically as pattern is typed
-set laststatus=2 " Always show status line
+" set laststatus=2 " Always show status line
 set nostartofline " Don’t reset cursor to start of line when moving around.
 set ruler " Show the cursor position
 set showmode " Show the current mode
@@ -15,7 +14,7 @@ set showcmd " Show the (partial) command as it’s being typed
 set nocompatible " Make Vim more useful
 set clipboard=unnamed " Use the OS clipboard by default (on versions compiled with `+clipboard`)
 set esckeys " Allow cursor keys in insert mode
-set backspace=indent,eol,start " Allow backspace in insert mode
+" set backspace=indent,eol,start " Allow backspace in insert mode
 set scrolloff=3 " Start scrolling three lines before the horizontal window border
 
 " set wildmenu " Enhance command-line completion
@@ -23,9 +22,6 @@ set scrolloff=3 " Start scrolling three lines before the horizontal window borde
 " set ignorecase " Ignore case of searches
 " set gdefault " Add the g flag to search/replace by default
 
-" Respect modeline in files
-set modeline
-set modelines=4
 
 " Enable per-directory .vimrc files and disable unsafe commands in them
 set exrc
@@ -47,8 +43,8 @@ endif
 set backupskip=/tmp/*,/private/tmp/*
 
 " Show “invisible” characters
-set lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_
-set list
+" set lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_
+" set list
 
 " Use relative line numbers
 if exists("&relativenumber")
@@ -67,4 +63,4 @@ endfunction
 noremap <leader>ss :call StripWhitespace()<CR>
 
 " Save a file as root (,W)
-noremap <leader>W :w !sudo tee % > /dev/null<CR>
+" noremap <leader>W :w !sudo tee % > /dev/null<CR>

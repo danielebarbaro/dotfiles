@@ -1,6 +1,6 @@
 [user]
-  name = First Name Last Name
-  email = mail@mail.local
+  name = Daniele Barbaro
+  email = barbaro.daniele@gmail.com
 [filter "media"]
   required = true
   clean = git media clean %f
@@ -36,12 +36,20 @@
   history = for-each-ref --sort=-committerdate refs/heads/
   historybr = branch --sort=-committerdate
   ls = ls-files
-  unstage = reset HEAD --
+	unstage = reset HEAD --
   last = log -1 HEAD
 [core]
   editor = vim
-  excludesfile = ~/.gitignore
+  excludesfile = /Users/daniele/.gitignore
+#  autocrlf = true
 [merge]
   tool = vimdiff
 [push]
   default = current
+[difftool "sourcetree"]
+  cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+[mergetool "sourcetree"]
+  cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+  trustExitCode = true
+[commit]
+  template = /Users/daniele/.stCommitMsg
